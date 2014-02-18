@@ -1,11 +1,40 @@
 package Managers;
 
+import org.andengine.audio.sound.Sound;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.TextureManager;
+import org.andengine.opengl.texture.TextureOptions;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.source.AssetBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
+import org.andengine.opengl.texture.region.ITextureRegion;
+import org.andengine.opengl.texture.region.TextureRegion;
+import org.andengine.opengl.texture.region.TiledTextureRegion;
+import org.andengine.util.color.Color;
+
+import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.Typeface;
+import android.opengl.GLES20;
+import android.util.FloatMath;
+
+import com.ronb.magnetank.MagneTankActivity;
+import com.ronb.magnetank.R;
+import com.ronb.magnetank.SwitchableFixedStepEngine;
+
 /**
  * This ResourceManager adds the ability to use a set of lower-quality textures
  * if desired. It also includes methods for determining an accurate Font texture
  * size to prevent wasting valuable texture memory.
- * 
- *** @author Brian Broyles - IFL Game Studio
  **/
 public class ResourceManager extends Object {
 
@@ -559,6 +588,136 @@ public class ResourceManager extends Object {
 		// Revert the Asset Path.
 		BitmapTextureAtlasTextureRegionFactory
 				.setAssetBasePath(mPreviousAssetBasePath);
+	}
+	
+	
+	// ================================ LOAD TEXTURES (MENU) ============================
+	private void loadMenuTextures() {
+		//store the current base path to apply it after we've loaded our textures
+		mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MagneTank/Menu/");
+		
+		if(menuLevelIconTR == null) {
+			BitmapTextureAtlas LevelIconT = new BitmapTextureAtlas(ResourceManager.getActivity().getTextureManager(), 64, 64, mTransparentTextureOption);
+			menuLevelIconTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(LevelIconT, ResourceManager.getActivity(), "LevelIcon.png", 0, 0);
+			LevelIconT.load();
+		}
+		
+		if(menuLevelLockedTR == null) {
+			BitmapTextureAtlas LevelLockedT = new BitmapTextureAtlas(ResourceManager.getActivity().getTextureManager(), 64, 64, mTransparentTextureOption);
+			menuLevelLockedTR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(LevelLockedT, ResourceManager.getActivity(), "Lock.png", 0, 0);
+			LevelLockedT.load();
+		}
+		
+		if(menuLevelStarTTR == null) {
+			BitmapTextureAtlas LevelStarT = new BitmapTextureAtlas(ResourceManager.getActivity().getTextureManager(), 64, 64, mTransparentTextureOption);
+			menuLevelStarTTR = BitmapTextureAtlasTextureRegionFactory.createTiledFromAsset(LevelStarT, ResourceManager.getActivity(), "Stars.png", 0, 0, 4, 1);
+			LevelStarT.load();
+		}
+		
+		if(menuArrow1TR == null) {
+			BitmapTextureAtlas arrow1T = new BitmapTextureAtlas(ResourceManager.getActivity().getTextureManager(), 64, 64, mTransparentTextureOption);
+			menuArrow1TR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(arrow1T, ResourceManager.getActivity(), "Arrow1.png", 0, 0);
+			arrow1T.load();
+		}
+		
+		if(menuArrow2TR == null) {
+			BitmapTextureAtlas arrow2T = new BitmapTextureAtlas(ResourceManager.getActivity().getTextureManager(), 64, 64, mTransparentTextureOption);
+			menuArrow2TR = BitmapTextureAtlasTextureRegionFactory.createFromAsset(arrow2T, ResourceManager.getActivity(), "Arrow2.png", 0, 0);
+			arrow2T.load();
+		}
+		
+		if(!useHighQuality)
+			BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MagneTank/Limited/Menu/");
+		
+		if(menuBackgroundTR == null)
+			menuBackgroundTR = getLimitableTR("BG.jpg", mNormalTextureOption);
+		
+		if(menuMainTitleTR == null)
+			menuMainTitleTR = getLimitableTR("MagneTankTitle.png", mTransparentTextureOption);
+		
+		if(menuMainButtonsTTR == null)
+			menuMainButtonsTTR = getLimitableTTR("MainMenuButtons.png", 1, 4, mTransparentTextureOption);
+		
+		//revert the asset base path
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(mPreviousAssetBasePath);
+	}
+	
+	// ============================== LOAD TEXTURES (SHARED) =============================================
+	private void loadSharedTextures() {
+		//store the current asset base path to apply it after we've loaded our textures
+		mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
+		
+		if(!useHighQuality)
+			BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MagneTank/Limited/");
+		else
+			BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MagneTank/");
+		
+		if(MusicToggleTTR == null)
+			MusicToggleTTR = getLimitableTTR("MusicToggle.png", 2, 1, mTransparentTextureOption);
+		
+		if(SoundToggleTTR == null)
+			SoundToggleTTR = getLimitableTTR("SoundToggle.png", 2, 1, mTransparentTextureOption);
+		
+		//revert the asset path
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(mPreviousAssetBasePath);
+	}
+	
+	// ============================== LOAD FONTS ===========================================
+	private void loadFonts() {
+		//Create the Font objects via FontFactory class
+		if(fontDefault32Bold == null) {
+			fontDefault32Bold = FontFactory.create(engine.getFontManager(), engine.getTextureManager(), 256, 256, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 32f, true, Color.WHITE_ARGB_PACKED_INT);
+			fontDefault32Bold.load();
+		}
+		
+		if(fontDefault72Bold == null) {
+			fontDefault72Bold = FontFactory.create(engine.getFontManager(), engine.getTextureManager(), 512, 512, Typeface.create(Typeface.DEFAULT, Typeface.BOLD), 72f, true, Color.WHITE_ARGB_PACKED_INT);
+			fontDefault72Bold.load();
+		}
+		
+		if(fontMonospace72Bold == null) {
+			fontMonospace72Bold = FontFactory.create(engine.getFontManager(), engine.getTextureManager(), 512, 512, Typeface.create(Typeface.MONOSPACE, Typeface.BOLD), 72f, true, Color.WHITE_ARGB_PACKED_INT);
+			fontMonospace72Bold.load();
+		}
+		
+		if(fontDefaultMagneTank48 == null) {
+			fontDefaultMagneTank48 = getFont(Typeface.createFromAsset(activity.getAssets(), "fonts/X_SCALE_by_Factor_i.ttf"), 48f, true);
+			fontDefaultMagneTank48.load();
+		}
+	}
+	
+	//the following methods load and return a Font using a minimal amount of texture memory
+	private static String DEFAULT_CHARS = "ABCDEFGHIJLKMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890~`!@#$%^&*()-_=+[] {};:'\",<.>?/\\";
+	
+	public Font getFont(Typeface pTypeface, float pSize, boolean pAntiAlias) {
+		return getFont(pTypeface, pSize, pAntiAlias, DEFAULT_CHARS);
+	}
+	
+	private static float FONT_TEXTURE_PADDING_RATIO = 1.04f;
+	private float FontTextureWidth = 0f;
+	private float FontTextureHeight = 0f;
+	private int FontTextureRows;
+	
+	public Font getFont(Typeface pTypeface, float pSize, boolean pAntiAlias, String pCharsToUse) {
+		updateTextBounds(pTypeface, pSize, pAntiAlias, pCharsToUse);
+		FontTextureWidth = (float) (mTextBounds.width() - mTextBounds.left);
+		FontTextureHeight = (float) (mTextBounds.height() - mTextBounds.top);
+		FontTextureRows = (int) Math.round(FloatMath.sqrt(FontTextureWidth / FontTextureHeight));
+		FontTextureWidth = ((FontTextureWidth / FontTextureRows) * FONT_TEXTURE_PADDING_RATIO);
+		FontTextureHeight = ((FontTextureHeight * FontTextureRows) * FONT_TEXTURE_PADDING_RATIO);
+		return new Font(engine.getFontManager(), new BitmapTextureAtlas(engine.getTextureManager(), (int) FontTextureWidth, (int) FontTextureHeight, BitmapTextureFormat.RGBA_8888, TextureOptions.DEFAULT), pTypeface, pSize, pAntiAlias, Color.WHITE_ARGB_PACKED_INT);
+	}
+	
+	private Paint mPaint;
+	private Rect mTextBounds = new Rect();
+	
+	private void updateTextBounds(final Typeface pTypeface, final float pSize, final boolean pAntiAlias, final String pCharactersAsString) {
+		mPaint = new Paint();
+		mPaint.setTypeface(pTypeface);
+		mPaint.setTextSize(pSize);
+		mPaint.setAntiAlias(pAntiAlias);
+		mPaint.getTextBounds(pCharactersAsString, 0, pCharactersAsString.length(), this.mTextBounds);
 	}
 
 }
