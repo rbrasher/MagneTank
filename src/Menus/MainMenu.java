@@ -8,6 +8,8 @@ import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
 import Managers.ResourceManager;
+import Managers.SFXManager;
+import Managers.SceneManager;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.text.Html;

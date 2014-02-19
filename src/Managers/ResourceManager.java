@@ -28,6 +28,7 @@ import android.opengl.GLES20;
 import android.util.FloatMath;
 
 import com.ronb.magnetank.MagneTankActivity;
+import com.ronb.magnetank.MagneTankSmoothCamera;
 import com.ronb.magnetank.R;
 import com.ronb.magnetank.SwitchableFixedStepEngine;
 

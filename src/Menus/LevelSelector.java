@@ -75,7 +75,7 @@ public class LevelSelector extends Entity {
 		for(int i = 0; i < mROWS; i++) {
 			//loop through, adjust COLUMN positions and
 			//create sprite/text objects
-			for(int o = 0; o < mColumns; o++) {
+			for(int o = 0; o < mCOLUMNS; o++) {
 				//Create the level tile/button
 				final LevelSelectorButton levelButton = new LevelSelectorButton(currentTileLevel, mWorldIndex, tempX, tempY, mTILE_DIMENSION, mTILE_DIMENSION, textureRegion, ResourceManager.getEngine().getVertexBufferObjectManager());
 				

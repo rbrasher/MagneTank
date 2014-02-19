@@ -11,8 +11,13 @@ import org.andengine.opengl.view.RenderSurfaceView;
 import org.andengine.ui.activity.BaseGameActivity;
 
 import Managers.ResourceManager;
+import Managers.SFXManager;
+import Managers.SceneManager;
+import Menus.MainMenu;
+import Menus.MainMenu.MainMenuScreens;
+import Menus.ManagedMenuScene;
+import Menus.SplashScreens;
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
