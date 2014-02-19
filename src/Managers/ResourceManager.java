@@ -15,6 +15,9 @@ import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 import org.andengine.util.color.Color;
 
+import Layers.LevelPauseLayer;
+import Layers.LevelWonLayer;
+import Layers.OptionsLayer;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.PendingIntent;

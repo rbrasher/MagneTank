@@ -7,6 +7,8 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
 
+import Input.GrowButton;
+import Layers.OptionsLayer;
 import Managers.ResourceManager;
 import Managers.SFXManager;
 import Managers.SceneManager;

@@ -5,6 +5,8 @@ import org.andengine.engine.camera.hud.HUD;
 import org.andengine.engine.handler.IUpdateHandler;
 import org.andengine.entity.scene.Scene;
 
+import Layers.ManagedLayer;
+import Layers.OptionsLayer;
 import Menus.MainMenu;
 
 import com.ronb.magnetank.ManagedScene;

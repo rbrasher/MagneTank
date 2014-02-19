@@ -1,12 +1,18 @@
 package Layers;
 
 import org.andengine.engine.handler.IUpdateHandler;
+import org.andengine.entity.modifier.AlphaModifier;
+import org.andengine.entity.modifier.ScaleModifier;
+import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.entity.text.Text;
 
+import Input.GrowButton;
 import Managers.ResourceManager;
 import Managers.SceneManager;
+
+import com.ronb.magnetank.MagneTankActivity;
 
 /**
  * The LevelWonLayer class represents the layer that is shown to the player
