@@ -3,6 +3,7 @@ package com.ronb.magnetank;
 import org.andengine.engine.camera.SmoothCamera;
 import org.andengine.engine.handler.IUpdateHandler;
 
+import GameLevels.Elements.MagneTank;
 import Managers.ResourceManager;
 
 /**
