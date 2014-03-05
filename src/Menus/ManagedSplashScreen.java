@@ -4,8 +4,8 @@ import org.andengine.entity.scene.Scene;
 
 import Managers.ResourceManager;
 
-import com.ronb.magnetank.MagneTankSmoothCamera;
-import com.ronb.magnetank.ManagedScene;
+import com.comfycouch.mtrakk.MTrakkSmoothCamera;
+import com.comfycouch.mtrakk.ManagedScene;
 
 /**
  * Based on the ManagedMenuScene class
@@ -27,7 +27,7 @@ public abstract class ManagedSplashScreen extends ManagedScene {
 		this.setOnSceneTouchListenerBindingOnActionDownEnabled(true);
 		this.setTouchAreaBindingOnActionDownEnabled(true);
 		this.setTouchAreaBindingOnActionMoveEnabled(true);
-		MagneTankSmoothCamera.setupForMenus();
+		MTrakkSmoothCamera.setupForMenus();
 		this.setPosition(0, ResourceManager.getInstance().cameraHeight / 2f);
 		this.dispose();
 	}

@@ -8,13 +8,13 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
 import org.andengine.entity.text.Text;
 import org.andengine.opengl.font.Font;
-import org.andengine.util.HorizontalAlign;
+import org.andengine.util.adt.align.HorizontalAlign;
 
 import Managers.ResourceManager;
 
-import com.ronb.magnetank.MagneTankSmoothCamera;
-import com.ronb.magnetank.ManagedScene;
-import com.ronb.magnetank.SwitchableFixedStepEngine;
+import com.comfycouch.mtrakk.MTrakkSmoothCamera;
+import com.comfycouch.mtrakk.ManagedScene;
+import com.comfycouch.mtrakk.SwitchableFixedStepEngine;
 
 /**
  * The idea behind using loading steps is the same as showing a loading
@@ -100,7 +100,7 @@ public abstract class ManagedGameScene extends ManagedScene {
 	@Override
 	public Scene onLoadingScreenLoadAndShown() {
 		((SwitchableFixedStepEngine) ResourceManager.getEngine()).DisableFixedStep();
-		MagneTankSmoothCamera.setupForMenus();
+		MTrakkSmoothCamera.setupForMenus();
 		this.mLoadingScene = new Scene();
 		this.mLoadingScene.setBackgroundEnabled(true);
 		this.mLoadingScene.setBackground(new Background(mLOADING_SCREEN_BACKGROUND_COLOR_RED, mLOADING_SCREEN_BACKGROUND_COLOR_GREEN, mLOADING_SCREEN_BACKGROUND_COLOR_BLUE));

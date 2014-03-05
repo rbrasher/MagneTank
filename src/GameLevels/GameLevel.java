@@ -14,7 +14,6 @@ import org.andengine.entity.scene.CameraScene;
 import org.andengine.entity.scene.IOnSceneTouchListener;
 import org.andengine.entity.scene.Scene;
 import org.andengine.entity.scene.background.Background;
-import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 import org.andengine.extension.physics.box2d.FixedStepPhysicsWorld;
@@ -28,8 +27,7 @@ import GameLevels.Levels.BeamsInLevelDef;
 import GameLevels.Levels.EnemiesInLevelDef;
 import GameLevels.Levels.LevelDef;
 import GameLevels.Elements.BouncingPowerBar;
-import GameLevels.Elements.MagneTank;
-import GameLevels.Elements.MagneticCrate;
+import GameLevels.Elements.MTrakk;
 import GameLevels.Elements.MagneticCrate.MagneticCrateDef;
 import GameLevels.Elements.MagneticOrb;
 import GameLevels.Elements.MagneticPhysObject;
@@ -37,10 +35,10 @@ import GameLevels.Elements.MechRat;
 import GameLevels.Elements.MetalBeamDynamic;
 import GameLevels.Elements.MetalBeamStatic;
 import GameLevels.Elements.ParallaxLayer;
+import GameLevels.Elements.ParallaxLayer.ParallaxEntity;
 import GameLevels.Elements.PhysObject;
 import GameLevels.Elements.RemainingCratesBar;
-import GameLevels.Elements.TexturedBezierLandscape;
-import GameLevels.Elements.WoodenBeamDynamic;
+import GameLevels.Elements.TexturedBezierLandscape;import GameLevels.Elements.WoodenBeamDynamic;
 import Input.GrowButton;
 import Input.GrowToggleButton;
 import Layers.LevelPauseLayer;
@@ -55,8 +53,8 @@ import android.hardware.SensorManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.ronb.magnetank.MagneTankSmoothCamera;
-import com.ronb.magnetank.SwitchableFixedStepEngine;
+import com.comfycouch.mtrakk.MTrakkSmoothCamera;
+import com.comfycouch.mtrakk.SwitchableFixedStepEngine;
 
 public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener, GameLevelGoal {
 
@@ -98,18 +96,19 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 	public float mBasePositionX;
 	public float mBasePositionY;
 	public ArrayList<float[]> mBasePositions = new ArrayList<float[]>();
-	public MagneTank mMagneTank;
+	public MTrakk mMTrakk;
 	public ArrayList<MagneticPhysObject<?>> mMagneticObjects = new ArrayList<MagneticPhysObject<?>>();
 	public int mNumberEnemiesLeft;
 	public ArrayList<MagneticCrateDef> mCratesLeft = new ArrayList<MagneticCrateDef>();
 	public Entity mCrateLayer = new Entity();
 	public RemainingCratesBar mRemainingCratesBar;
 	public boolean mIsLevelSettled = false;
+	public float mBaseTotalMovementTime;
 	public boolean mIsThereBaseMovement = false;
 	public int TotalScorePossible;
 	public int CurrentScore;
 	
-	private final MagneTankSmoothCamera mCamera = ResourceManager.getCamera();
+	private final MTrakkSmoothCamera mCamera = ResourceManager.getCamera();
 	private static float SCALED_CAMERA_ZOOM = mCAMERA_ZOOM * ResourceManager.getInstance().cameraScaleFactorX;
 	private boolean mHasCompletionTimerRun = false;
 	private int mTrailingDotCounter;
@@ -127,7 +126,7 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 			this.mTotalElapsedTime += pSecondsElapsed;
 			if(this.mTotalElapsedTime >= mSECONDS_FOR_LEVEL_TO_SETTLE) {
 				GameLevel.this.mIsLevelSettled = true;
-				GameLevel.this.mMagneTank.equipNextCrate(true);
+				GameLevel.this.mMTrakk.equipNextCrate(true);
 				GameLevel.this.unregisterUpdateHandler(this);
 			}
 		}
@@ -192,7 +191,7 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 
 		@Override
 		protected Text onAllocatePoolItem() {
-			return new Text(0f, 0f, ResourceManager.fontDefaultMagneTank48, "", 15, ResourceManager.getActivity().getVertexBufferObjectManager()) {
+			return new Text(0f, 0f, ResourceManager.fontDefaultMTrakk48, "", 15, ResourceManager.getActivity().getVertexBufferObjectManager()) {
 				Text ThisText = this;
 				
 				@Override
@@ -273,7 +272,7 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 			oldHUD.dispose();
 			this.mCamera.setHUD(null);
 		}
-		MagneTankSmoothCamera.setupForMenus();
+		MTrakkSmoothCamera.setupForMenus();
 	}
 	
 	public Sprite getLastTrailingDot() {
@@ -383,7 +382,7 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 			public void onLoad() {
 				GameLevel.this.mCamera.setHUD(new HUD());
 				GameLevel.this.mCamera.getHUD().setVisible(false);
-				GameLevel.this.scoreText = new Text(GameLevel.this.mCamera.getWidth() / 2f, 0, ResourceManager.fontDefaultMagneTank48, mON_SCREEN_SCORE_PRETEXT + "0      ", ResourceManager.getActivity().getVertexBufferObjectManager());
+				GameLevel.this.scoreText = new Text(GameLevel.this.mCamera.getWidth() / 2f, 0, ResourceManager.fontDefaultMTrakk48, mON_SCREEN_SCORE_PRETEXT + "0      ", ResourceManager.getActivity().getVertexBufferObjectManager());
 				GameLevel.this.scoreText.setPosition(GameLevel.this.mCamera.getWidth() / 2f, GameLevel.this.mCamera.getHeight() - (GameLevel.this.scoreText.getHeight() / 2f));
 				GameLevel.this.scoreText.setScale(0.75f);
 				GameLevel.this.scoreText.setAlpha(0.85f);
@@ -425,7 +424,7 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 				GameLevel.this.mCamera.getHUD().registerTouchArea(PauseButton);
 				GameLevel.this.mCamera.getHUD().registerTouchArea(MusicToggleButton);
 				GameLevel.this.mCamera.getHUD().registerTouchArea(SoundToggleButton);
-				final Text LevelIndexText = new Text(GameLevel.this.mCamera.getWidth() / 2f, GameLevel.this.mCamera.getHeight() / 2f, ResourceManager.fontDefaultMagneTank48, mLEVEL_NUMBER_PRETEXT + GameLevel.this.mLevelDef.mLevelIndex, ResourceManager.getActivity().getVertexBufferObjectManager());
+				final Text LevelIndexText = new Text(GameLevel.this.mCamera.getWidth() / 2f, GameLevel.this.mCamera.getHeight() / 2f, ResourceManager.fontDefaultMTrakk48, mLEVEL_NUMBER_PRETEXT + GameLevel.this.mLevelDef.mLevelIndex, ResourceManager.getActivity().getVertexBufferObjectManager());
 				LevelIndexText.setAlpha(0.85f);
 				LevelIndexText.registerEntityModifier(new SequenceEntityModifier(new DelayModifier(1.5f), new MoveModifier(2f, GameLevel.this.mCamera.getWidth() / 2f, GameLevel.this.mCamera.getHeight() / 2f, GameLevel.this.mCamera.getWidth() - (LevelIndexText.getWidth() * 0.6f), GameLevel.this.mCamera.getHeight() - (LevelIndexText.getHeight() * 0.6f), EaseElasticOut.getInstance())));
 				GameLevel.this.mCamera.getHUD().attachChild(LevelIndexText);
@@ -443,10 +442,10 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 							new MetalBeamDynamic(curBeam.mX, curBeam.mY, curBeam.mLength, curBeam.mRotation, GameLevel.this);
 							break;
 						case MetalStatic:
-							new MetalBeamStatic(curBeam.mX, curBeam.mY, curBeam.length, curBeam.mRotation, GameLevel.this);
+							new MetalBeamStatic(curBeam.mX, curBeam.mY, curBeam.mLength, curBeam.mRotation, GameLevel.this);
 							break;
 						case WoodenDynamic:
-							new WoodenBeamDynamic(curBeam.mX, curBeam.mY, curBeam.length, curBeam.mRotation, GameLevel.this);
+							new WoodenBeamDynamic(curBeam.mX, curBeam.mY, curBeam.mLength, curBeam.mRotation, GameLevel.this);
 							break;
 					}
 				}
@@ -478,7 +477,7 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 			@Override
 			public void onLoad() {
 				GameLevel.this.resetTrailingDots();
-				final MagneticCrate[] SetCrates = GameLevel.this.mLevelDef.mCrates;
+				final MagneticCrateDef[] SetCrates = GameLevel.this.mLevelDef.mCrates;
 				for(final MagneticCrateDef curDef : SetCrates) {
 					GameLevel.this.mCratesLeft.add(curDef);
 					GameLevel.this.TotalScorePossible += mCRATE_POINT_VALUE;
@@ -494,8 +493,8 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 			
 			@Override
 			public void onLoad() {
-				GameLevel.this.mMagneTank = new MagneTank(400f, 240f, GameLevel.this);
-				GameLevel.this.mCamera.setMagneTankEntity(GameLevel.this.mMagneTank);
+				GameLevel.this.mMTrakk = new MTrakk(400f, 240f, GameLevel.this);
+				GameLevel.this.mCamera.setMTrakkEntity(GameLevel.this.mMTrakk);
 				BouncingPowerBar.attachInstanceToHud(GameLevel.this.mCamera.getHUD());
 				new MagneticOrb(GameLevel.this);
 			}
@@ -510,7 +509,7 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 				GameLevel.this.mCamera.goToBaseForSeconds(0.8f);
 				
 				GameLevel.this.mCamera.setBounds(-256f, -256f, 4000f, 2000f);
-				GameLevel.this.setBoundsEnabled(true);
+				GameLevel.this.mCamera.setBoundsEnabled(true);
 				
 				GameManager.setGameLevelGoal(GameLevel.this);
 				
@@ -532,7 +531,7 @@ public class GameLevel extends ManagedGameScene implements IOnSceneTouchListener
 
 	@Override
 	public boolean onSceneTouchEvent(final Scene pScene, final TouchEvent pSceneTouchEvent) {
-		this.mMagneTank.onMagneTankTouchEvent(pScene, pSceneTouchEvent);
+		this.mMTrakk.onMTrakkTouchEvent(pScene, pSceneTouchEvent);
 		return true;
 	}
 	

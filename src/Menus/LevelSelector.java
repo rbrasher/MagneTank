@@ -7,6 +7,7 @@ import org.andengine.entity.scene.Scene;
 import org.andengine.opengl.font.Font;
 import org.andengine.opengl.texture.region.ITextureRegion;
 
+import GameLevels.Levels;
 import Managers.ResourceManager;
 
 /**

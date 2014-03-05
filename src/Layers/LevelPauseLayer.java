@@ -5,11 +5,13 @@ import org.andengine.entity.primitive.Rectangle;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
 
+import GameLevels.GameLevel;
+import GameLevels.Levels;
 import Input.GrowButton;
 import Managers.ResourceManager;
 import Managers.SceneManager;
 
-import com.ronb.magnetank.MagneTankActivity;
+import com.comfycouch.mtrakk.MTrakkActivity;
 
 /**
  * The LevelPauseLayer class represents the layer that is shown to the
@@ -179,19 +181,19 @@ public class LevelPauseLayer extends ManagedLayer {
 		this.mLayerBG.attachChild(this.mNextLevelButton);
 		this.registerTouchArea(this.mNextLevelButton);
 		
-		this.mMainText = new Text(0f, 0f, ResourceManager.fontDefaultMagneTank48, "LEVEL *** PAUSED", ResourceManager.getActivity().getVertexBufferObjectManager());
+		this.mMainText = new Text(0f, 0f, ResourceManager.fontDefaultMTrakk48, "LEVEL *** PAUSED", ResourceManager.getActivity().getVertexBufferObjectManager());
 		this.mMainText.setScale(Math.min(390 / this.mMainText.getWidth(), 1f));
 		this.mMainText.setPosition(256f, 205f);
 		this.mMainText.setColor(0.31f, 0.35f, 0.31f);
 		this.mLayerBG.attachChild(this.mMainText);
 		
-		this.mScoreText = new Text(0f, 0f, ResourceManager.fontDefaultMagneTank48, "CURRENT SCORE: ******", ResourceManager.getActivity().getVertexBufferObjectManager());
+		this.mScoreText = new Text(0f, 0f, ResourceManager.fontDefaultMTrakk48, "CURRENT SCORE: ******", ResourceManager.getActivity().getVertexBufferObjectManager());
 		this.mScoreText.setScale(Math.min(352f / this.mScoreText.getWidth(), 1f));
 		this.mScoreText.setPosition(256f, 155f);
 		this.mScoreText.setColor(0.31f, 0.35f, 0.31f);
 		this.mLayerBG.attachChild(this.mScoreText);
 		
-		this.mHighScoreText = new Text(0f, 0f, ResourceManager.fontDefaultMagneTank48, "HIGHSCORE: ******", ResourceManager.getActivity().getVertexBufferObjectManager());
+		this.mHighScoreText = new Text(0f, 0f, ResourceManager.fontDefaultMTrakk48, "HIGHSCORE: ******", ResourceManager.getActivity().getVertexBufferObjectManager());
 		this.mHighScoreText.setScale(Math.min(352f / this.mHighScoreText.getWidth(), 1f));
 		this.mHighScoreText.setPosition(256f, 128f);
 		this.mHighScoreText.setColor(0.31f, 0.35f, 0.31f);
@@ -218,13 +220,13 @@ public class LevelPauseLayer extends ManagedLayer {
 		this.mScoreText.setScale(Math.min(352f / this.mScoreText.getWidth(), 1f));
 		
 		//show the high score (or the current score if it is the highscore)
-		final int PreviousHighScore = MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_HIGHSCORE + this.mCurrentLevel.mLevelDef.mLevelIndex);
+		final int PreviousHighScore = MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_HIGHSCORE + this.mCurrentLevel.mLevelDef.mLevelIndex);
 		this.mHighScoreText.setText("HIGHSCORE: " + PreviousHighScore);
 		this.mHighScoreText.setScale(Math.min(352f / this.mHighScoreText.getWidth(), 1f));
 		
 		//make the next level reachable
-		final int currentMaxLevel = MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_MAX_REACHED);
-		if(currentMaxLevel >= this.mCurrentLevel.mLevelDef.mLevelindex) {
+		final int currentMaxLevel = MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_MAX_REACHED);
+		if(currentMaxLevel >= this.mCurrentLevel.mLevelDef.mLevelIndex) {
 			this.mNextLevelButton.mIsEnabled = true;
 		} else {
 			this.mNextLevelButton.mIsEnabled = false;

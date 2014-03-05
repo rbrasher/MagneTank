@@ -8,7 +8,7 @@ import org.andengine.audio.sound.Sound;
 import org.andengine.audio.sound.SoundFactory;
 import org.andengine.util.debug.Debug;
 
-import com.ronb.magnetank.MagneTankActivity;
+import com.comfycouch.mtrakk.MTrakkActivity;
 
 /**
  * This class handles the playback of music and sounds as well as
@@ -102,13 +102,13 @@ public class SFXManager extends Object {
 	public static void setSoundMuted(final boolean pMuted) {
 		getInstance().mSoundsMuted = pMuted;
 		setVolumeForAllSounds((getInstance().mSoundsMuted ? 0f : 1f));
-		MagneTankActivity.writeIntToSharedPreferences(MagneTankActivity.SHARED_PREFS_SOUNDS_MUTED, (getInstance().mSoundsMuted ? 1 : 0));
+		MTrakkActivity.writeIntToSharedPreferences(MTrakkActivity.SHARED_PREFS_SOUNDS_MUTED, (getInstance().mSoundsMuted ? 1 : 0));
 	}
 	
 	public static boolean toggleSoundMuted() {
 		getInstance().mSoundsMuted = !getInstance().mSoundsMuted;
 		setVolumeForAllSounds((getInstance().mSoundsMuted ? 0f : 1f));
-		MagneTankActivity.writeIntToSharedPreferences(MagneTankActivity.SHARED_PREFS_SOUNDS_MUTED, (getInstance().mSoundsMuted ? 1 : 0));
+		MTrakkActivity.writeIntToSharedPreferences(MTrakkActivity.SHARED_PREFS_SOUNDS_MUTED, (getInstance().mSoundsMuted ? 1 : 0));
 		return getInstance().mSoundsMuted;
 	}
 	
@@ -122,7 +122,7 @@ public class SFXManager extends Object {
 			mMusic.pause();
 		else
 			mMusic.play();
-		MagneTankActivity.writeIntToSharedPreferences(MagneTankActivity.SHARED_PREFS_MUSIC_MUTED, (getInstance().mMusicMuted ? 1 : 0));
+		MTrakkActivity.writeIntToSharedPreferences(MTrakkActivity.SHARED_PREFS_MUSIC_MUTED, (getInstance().mMusicMuted ? 1 : 0));
 	}
 	
 	public static boolean toggleMusicMuted() {
@@ -131,7 +131,7 @@ public class SFXManager extends Object {
 			mMusic.pause();
 		else 
 			mMusic.play();
-		MagneTankActivity.writeIntToSharedPreferences(MagneTankActivity.SHARED_PREFS_MUSIC_MUTED, (getInstance().mMusicMuted ? 1 : 0));
+		MTrakkActivity.writeIntToSharedPreferences(MTrakkActivity.SHARED_PREFS_MUSIC_MUTED, (getInstance().mMusicMuted ? 1 : 0));
 		return getInstance().mMusicMuted;
 	}
 	

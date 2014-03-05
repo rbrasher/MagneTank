@@ -2,6 +2,8 @@ package Managers;
 
 import org.andengine.engine.handler.IUpdateHandler;
 
+import GameLevels.GameLevel;
+
 /**
  * The GameManager class simply facilitates the checking of two conditions to
  * determine if a level is completed or failed. Using that information, the

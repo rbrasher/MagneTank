@@ -17,6 +17,9 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.util.math.MathConstants;
 import org.andengine.util.math.MathUtils;
 
+import static org.andengine.util.Constants.VERTEX_INDEX_X;
+import static org.andengine.util.Constants.VERTEX_INDEX_Y;
+
 import GameLevels.GameLevel;
 import Managers.ResourceManager;
 import Managers.SFXManager;

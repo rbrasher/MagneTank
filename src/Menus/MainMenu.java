@@ -19,9 +19,9 @@ import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
 
-import com.ronb.magnetank.MagneTankActivity;
-import com.ronb.magnetank.MagneTankSmoothCamera;
-import com.ronb.magnetank.R;
+import com.comfycouch.mtrakk.MTrakkActivity;
+import com.comfycouch.mtrakk.MTrakkSmoothCamera;
+import com.comfycouch.mtrakk.R;
 
 /**
  * The MainMenu Scene holds two Entities, one representing the title screen
@@ -62,7 +62,7 @@ public class MainMenu extends ManagedMenuScene {
 	public MainMenuScreens mCurrentScreen = MainMenuScreens.Title;
 	private Entity mHomeMenuScreen;
 	private Entity mLevelSelectScreen;
-	private Sprite mMagneTankBGSprite;
+	private Sprite mMTrakkBGSprite;
 	private LevelSelector mLevelSelector;
 	
 	public MainMenu() {
@@ -78,7 +78,7 @@ public class MainMenu extends ManagedMenuScene {
 		this.mCurrentScreen = MainMenuScreens.Title;
 		this.mHomeMenuScreen.registerEntityModifier(new MoveModifier(0.25f, this.mHomeMenuScreen.getX(), this.mHomeMenuScreen.getY(), 0f, 0f));
 		this.mLevelSelectScreen.registerEntityModifier(new MoveModifier(0.25f, this.mLevelSelectScreen.getX(), this.mLevelSelectScreen.getY(), mCameraWidth, 0f));
-		this.mMagneTankBGSprite.registerEntityModifier(new MoveModifier(0.25f, this.mMagneTankBGSprite.getX(), this.mMagneTankBGSprite.getY(), (this.mMagneTankBGSprite.getWidth() * this.mMagneTankBGSprite.getScaleX()) / 2f, (this.mMagneTankBGSprite.getHeight() * this.mMagneTankBGSprite.getScaleY()) / 2f));
+		this.mMTrakkBGSprite.registerEntityModifier(new MoveModifier(0.25f, this.mMTrakkBGSprite.getX(), this.mMTrakkBGSprite.getY(), (this.mMTrakkBGSprite.getWidth() * this.mMTrakkBGSprite.getScaleX()) / 2f, (this.mMTrakkBGSprite.getHeight() * this.mMTrakkBGSprite.getScaleY()) / 2f));
 	}
 	
 	@Override
@@ -89,23 +89,23 @@ public class MainMenu extends ManagedMenuScene {
 	@Override
 	public Scene onLoadingScreenLoadAndShown() {
 		ResourceManager.loadMenuResources();
-		MagneTankSmoothCamera.setupForMenus();
+		MTrakkSmoothCamera.setupForMenus();
 		
 		final Scene MenuLoadingScene = new Scene();
 		
-		this.mMagneTankBGSprite = new Sprite(0f, 0f, ResourceManager.menuBackgroundTR, ResourceManager.getActivity().getVertexBufferObjectManager());
-		this.mMagneTankBGSprite.setScale(ResourceManager.getInstance().cameraHeight / ResourceManager.menuBackgroundTR.getHeight());
-		this.mMagneTankBGSprite.setPosition((this.mMagneTankBGSprite.getWidth() * this.mMagneTankBGSprite.getScaleX()) / 2f, (this.mMagneTankBGSprite.getHeight() * this.mMagneTankBGSprite.getScaleY()) / 2f);
-		this.mMagneTankBGSprite.setZIndex(-999);
-		MenuLoadingScene.attachChild(this.mMagneTankBGSprite);
-		MenuLoadingScene.attachChild(new Text(mHalfCameraWidth, mCameraHeight, ResourceManager.fontDefaultMagneTank48, "Loading...", ResourceManager.getActivity().getVertexBufferObjectManager()));
+		this.mMTrakkBGSprite = new Sprite(0f, 0f, ResourceManager.menuBackgroundTR, ResourceManager.getActivity().getVertexBufferObjectManager());
+		this.mMTrakkBGSprite.setScale(ResourceManager.getInstance().cameraHeight / ResourceManager.menuBackgroundTR.getHeight());
+		this.mMTrakkBGSprite.setPosition((this.mMTrakkBGSprite.getWidth() * this.mMTrakkBGSprite.getScaleX()) / 2f, (this.mMTrakkBGSprite.getHeight() * this.mMTrakkBGSprite.getScaleY()) / 2f);
+		this.mMTrakkBGSprite.setZIndex(-999);
+		MenuLoadingScene.attachChild(this.mMTrakkBGSprite);
+		MenuLoadingScene.attachChild(new Text(mHalfCameraWidth, mCameraHeight, ResourceManager.fontDefaultMTrakk48, "Loading...", ResourceManager.getActivity().getVertexBufferObjectManager()));
 		
 		return MenuLoadingScene;
 	}
 
 	@Override
 	public void onLoadingScreenUnloadAndHidden() {
-		this.mMagneTankBGSprite.detachSelf();
+		this.mMTrakkBGSprite.detachSelf();
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class MainMenu extends ManagedMenuScene {
 		//load the game resources
 		ResourceManager.loadGameResources();
 		
-		this.mLevelSelector = new LevelSelector(mHalfCameraWidth, mHalfCameraHeight, MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_MAX_REACHED) + 1, 1, ResourceManager.menuLevelIconTR, ResourceManager.fontDefault32Bold, this);
+		this.mLevelSelector = new LevelSelector(mHalfCameraWidth, mHalfCameraHeight, MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_MAX_REACHED) + 1, 1, ResourceManager.menuLevelIconTR, ResourceManager.fontDefault32Bold, this);
 		
 		this.mHomeMenuScreen = new Entity(0f, mCameraHeight) {
 			boolean hasLoaded = false;
@@ -139,7 +139,7 @@ public class MainMenu extends ManagedMenuScene {
 					MainMenu.this.mCurrentScreen = MainMenuScreens.LevelSelector;
 					MainMenu.this.mHomeMenuScreen.registerEntityModifier(new MoveModifier(0.25f, MainMenu.this.mHomeMenuScreen.getX(), MainMenu.this.mHomeMenuScreen.getY(), -mCameraWidth, 0f));
 					MainMenu.this.mLevelSelectScreen.registerEntityModifier(new MoveModifier(0.25f, MainMenu.this.mLevelSelectScreen.getX(), MainMenu.this.mLevelSelectScreen.getY(), 0f, 0f));
-					MainMenu.this.mMagneTankBGSprite.registerEntityModifier(new MoveModifier(0.25f, MainMenu.this.mMagneTankBGSprite.getX(), MainMenu.this.mMagneTankBGSprite.getY(), ((MainMenu.this.mMagneTankBGSprite.getWidth() * MainMenu.this.mMagneTankBGSprite.getScaleX()) / 2f) - (150f * MainMenu.this.mMagneTankBGSprite.getScaleX()), (MainMenu.this.mMagneTankBGSprite.getHeight() * MainMenu.this.mMagneTankBGSprite.getScaleY()) / 2f));
+					MainMenu.this.mMTrakkBGSprite.registerEntityModifier(new MoveModifier(0.25f, MainMenu.this.mMTrakkBGSprite.getX(), MainMenu.this.mMTrakkBGSprite.getY(), ((MainMenu.this.mMTrakkBGSprite.getWidth() * MainMenu.this.mMTrakkBGSprite.getScaleX()) / 2f) - (150f * MainMenu.this.mMTrakkBGSprite.getScaleX()), (MainMenu.this.mMTrakkBGSprite.getHeight() * MainMenu.this.mMTrakkBGSprite.getScaleY()) / 2f));
 				}
 			}
 		};
@@ -168,9 +168,11 @@ public class MainMenu extends ManagedMenuScene {
 					public void run() {
 						final AlertDialog.Builder builder = new AlertDialog.Builder(ResourceManager.getActivity())
 							.setIcon(R.drawable.icon)
-							.setTitle("MagneTank")
-							.setMessage(Html.fromHtml("This game was designed and created by IFL Game Studio for the book <i>AndEngine for Android Game Development Cookbook</i>. The source code for MagneTank is included with the book along with tons of well-explained recipes for creating games using the AndEngine game-engine." + "<br>" + "<br><b><u>License:</u></b><br>The source code and graphics for MagneTank cannot be partially or fully distributed without direct permission from IFL Game Studio except in the compiled-form of an Android application with a name that is not similar to MagneTank. By using this game or its source-code, you agree that IFL Game Studio is not responsible for any damage that happens to your device." + "<br>" + "<br><b><u>Book Information:</u></b>" + "<br><b>Name:</b> <i>AndEngine for Android Game Development Cookbook</i>" + "<br><b>Authors:</b> Jayme Schroeder, Brian Broyles"
-									+ "<br><b>Publisher:</b> Packt Publishing" + "<br><b>ISBN:</b> 184951898X" + "<br><b>ISBN 13:</b> 9781849518987" + "<br>" + "<br><b><u>Contact Information:</u></b>" + "<br><a href=\"mailto:IFLGameStudio@gmail.com\">Email IFL Game Studio</a>"))
+							.setTitle("MTrakk")
+							.setMessage(Html.fromHtml("This game was designed and created by RonB for Comfy Couch Media. By using this game or its source-code, you agree that Comfy Couch Media is not responsible for any damage that happens to your device."
+									+ "<br><br><b><u>Contact Information:</u></b>" + "<br><a href=\"mailto:tony@comfycouchmedia.com\">Email Comfy Couch Media</a>"
+									+ "<br><br><b>Twitter</b><br><a href=\"https://twitter.com/RonBnAZ\">Follow RonBnAZ</a>"
+									+ "<br><br><a href=\"https://twitter.com/ComfyCouchMedia\">Follow ComfyCouchMedia</a>"))
 									.setPositiveButton("Back", new DialogInterface.OnClickListener() {
 										
 										@Override
@@ -247,9 +249,9 @@ public class MainMenu extends ManagedMenuScene {
 	@Override
 	public void onShowScene() {
 		this.RefreshLevelStars();
-		MagneTankSmoothCamera.setupForMenus();
-		if(!this.mMagneTankBGSprite.hasParent()) {
-			this.attachChild(this.mMagneTankBGSprite);
+		MTrakkSmoothCamera.setupForMenus();
+		if(!this.mMTrakkBGSprite.hasParent()) {
+			this.attachChild(this.mMTrakkBGSprite);
 			this.sortChildren();
 		}
 	}

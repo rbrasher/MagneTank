@@ -8,7 +8,7 @@ import GameLevels.GameLevel;
 import Managers.ResourceManager;
 
 /**
- * The MagneticOrb class creates a visual effect around the MagneTank's
+ * The MagneticOrb class creates a visual effect around the MTrakk's
  * current projectile. It rotates two swirl images in opposite directions
  * to give the illusion of a spherical force. The MagneticOrb formss and
  * fades as projectiles are loaded and shot.
@@ -81,8 +81,8 @@ public class MagneticOrb extends Entity {
 	}
 	
 	protected void onManagedUpdate(final float pSecondsElapsed) {
-		if(mGameLevel.mMagneTank.mGrabbedMagneticObject != null)
-			chaseEnt = mGameLevel.mMagneTank.mGrabbedMagneticObject;
+		if(mGameLevel.mMTrakk.mGrabbedMagneticObject != null)
+			chaseEnt = mGameLevel.mMTrakk.mGrabbedMagneticObject;
 		if(chaseEnt != null)
 			if(chaseEnt.mEntity != null) {
 				if(chaseEnt.mIsGrabbed) {

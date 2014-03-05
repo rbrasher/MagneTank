@@ -2,6 +2,7 @@ package GameLevels.Elements;
 
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.primitive.Mesh;
+import org.andengine.entity.shape.Shape;
 import org.andengine.opengl.shader.PositionColorTextureCoordinatesShaderProgram;
 import org.andengine.opengl.shader.constants.ShaderProgramConstants;
 import org.andengine.opengl.texture.region.ITextureRegion;
@@ -16,7 +17,7 @@ import org.andengine.opengl.vbo.attribute.VertexBufferObjectAttributesBuilder;
 
 import android.opengl.GLES20;
 
-public class TexturedMesh {
+public class TexturedMesh extends Shape {
 	// ===========================================================
 	// Constants
 	// ===========================================================
@@ -123,18 +124,15 @@ public class TexturedMesh {
 	// Methods for/from SuperClass/Interfaces
 	// ===========================================================
 
-	@Override
 	public ITexturedMeshVertexBufferObject getVertexBufferObject() {
 		return this.mMeshVertexBufferObject;
 	}
 
-	@Override
 	public void reset() {
 		super.reset();
 		this.initBlendFunction(this.getTextureRegion().getTexture());
 	}
 
-	@Override
 	protected void preDraw(final GLState pGLState, final Camera pCamera) {
 		super.preDraw(pGLState, pCamera);
 
@@ -142,23 +140,19 @@ public class TexturedMesh {
 		this.mMeshVertexBufferObject.bind(pGLState, this.mShaderProgram);
 	}
 
-	@Override
 	protected void draw(final GLState pGLState, final Camera pCamera) {
 		this.mMeshVertexBufferObject.draw(this.mDrawMode, this.mVertexCountToDraw);
 	}
 
-	@Override
 	protected void postDraw(final GLState pGLState, final Camera pCamera) {
 		this.mMeshVertexBufferObject.unbind(pGLState, this.mShaderProgram);
 		super.postDraw(pGLState, pCamera);
 	}
 
-	@Override
 	protected void onUpdateColor() {
 		this.mMeshVertexBufferObject.onUpdateColor(this);
 	}
 
-	@Override
 	protected void onUpdateVertices() {
 		this.mMeshVertexBufferObject.onUpdateVertices(this);
 	}

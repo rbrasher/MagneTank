@@ -6,7 +6,7 @@ package GameLevels;
  * LoadingRunnables is present in each ManagedGameScene to give the
  * developer as much or as little control over how much loading progression
  * is shown to the player. It is important to note that while the updating of
- * the loading screen is not processor intensive in MagneTank, a more
+ * the loading screen is not processor intensive in MTrakk, a more
  * complicated, graphically complex loading screen may take a large toll
  * on the loading times of each level.
  * 

@@ -17,7 +17,7 @@ import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
 import org.andengine.opengl.texture.region.ITextureRegion;
-import org.andengine.util.HorizontalAlign;
+import org.andengine.util.adt.align.HorizontalAlign;
 import org.andengine.util.modifier.IModifier;
 import org.andengine.util.modifier.IModifier.IModifierListener;
 
@@ -45,7 +45,7 @@ public class SplashScreens extends ManagedSplashScreen {
 	// CONSTANTS
 	// ==========================================
 	private static final float mEachAnimationDuration = 0.25f;
-	private static final float mEachAnimationPauseDuration = 2.2f;
+	private static final float mEachAnimationPauseDuration = 3.2f;
 	private static final float mEachScaleToSize = 0.7f * ResourceManager.getInstance().cameraScaleFactorY;
 	private static final float mInfoBarSpriteYShown = -(ResourceManager.getInstance().cameraHeight) / 2f;
 	private static final float mInfoBarSpriteYHidden = -((ResourceManager.getInstance().cameraHeight) / 2f) - (94f + 54f);
@@ -61,8 +61,8 @@ public class SplashScreens extends ManagedSplashScreen {
 		mInfoBarSprite.setAlpha(0.85f);
 	}
 	
-	private static final Text mDisplayInfoText1 = new Text(8f, mInfoBarSprite.getHeight() / 2f, ResourceManager.fontDefault72Bold, "follow me", 100, ResourceManager.getEngine().getVertexBufferObjectManager());
-	private static final Text mDisplayInfoText2 = new Text(mInfoBarSprite.getWidth() - 8f, mInfoBarSprite.getHeight() / 2f, ResourceManager.fontDefault72Bold, "Games & Graphics Development", 100, ResourceManager.getEngine().getVertexBufferObjectManager());
+	private static final Text mDisplayInfoText1 = new Text(8f, mInfoBarSprite.getHeight() / 2f, ResourceManager.fontDefault72Bold, "follow us", 100, ResourceManager.getEngine().getVertexBufferObjectManager());
+	private static final Text mDisplayInfoText2 = new Text(mInfoBarSprite.getWidth() - 8f, mInfoBarSprite.getHeight() / 2f, ResourceManager.fontDefault72Bold, "Games, Web & Graphics Development", 100, ResourceManager.getEngine().getVertexBufferObjectManager());
 	private static final Text mDisplayInfoText3 = new Text(mInfoBarSprite.getWidth() / 2f, mInfoBarSprite.getHeight() + 36f, ResourceManager.fontDefault72Bold, "Copyright 2014", 100, ResourceManager.getEngine().getVertexBufferObjectManager());
 	
 	static {
@@ -84,7 +84,7 @@ public class SplashScreens extends ManagedSplashScreen {
 	}
 	
 	private static final BitmapTextureAtlas mIFLLogoTexture = new BitmapTextureAtlas(ResourceManager.getEngine().getTextureManager(), 512, 472, TextureOptions.BILINEAR);
-	private static final ITextureRegion mIFLLogoTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mIFLLogoTexture, ResourceManager.getContext(), "gfx/Splash/IFL_logo.png", 0, 0);
+	private static final ITextureRegion mIFLLogoTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mIFLLogoTexture, ResourceManager.getContext(), "gfx/Splash/ComfyCouch_Logo.png", 0, 0);
 	private static final Sprite mIFLLogoSprite = new Sprite((ResourceManager.getInstance().cameraWidth) / 2f, 0f, mIFLLogoTextureRegion, ResourceManager.getEngine().getVertexBufferObjectManager()) {
 		@Override
 		public boolean onAreaTouched(final TouchEvent pSceneTouchEvent, final float pTouchAreaLocalX, final float pTouchAreaLocalY) {
@@ -123,6 +123,7 @@ public class SplashScreens extends ManagedSplashScreen {
 		}
 	};
 	
+	/*
 	private static final BitmapTextureAtlas mAndEngineBookLogoTexture = new BitmapTextureAtlas(ResourceManager.getEngine().getTextureManager(), 512, 189, TextureOptions.BILINEAR);
 	private static final ITextureRegion mAndEngineBookLogoTextureRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(mAndEngineBookLogoTexture, ResourceManager.getContext(), "gfx/Splash/AE_Book.png", 0, 0);
 	private static final Sprite mAndEngineBookLogoSprite = new Sprite(SplashScreens.mIFLLogoSprite.getX(), 0f, mAndEngineBookLogoTextureRegion, ResourceManager.getEngine().getVertexBufferObjectManager()) {
@@ -141,11 +142,11 @@ public class SplashScreens extends ManagedSplashScreen {
 			return false;
 		}
 	};
-	
+	*/
 	private static final SequenceEntityModifier mInfoBar_SequenceEntityModifier = new SequenceEntityModifier(new MoveModifier(mEachAnimationDuration, 0f, mInfoBarSpriteYHidden, 0f, mInfoBarSpriteYShown), new DelayModifier(mEachAnimationPauseDuration), new MoveModifier(mEachAnimationDuration, 0f, mInfoBarSpriteYShown, 0f, mInfoBarSpriteYHidden), new MoveModifier(mEachAnimationDuration, 0f, mInfoBarSpriteYHidden, 0f, mInfoBarSpriteYShown), new DelayModifier(mEachAnimationPauseDuration), new MoveModifier(mEachAnimationDuration, 0f, mInfoBarSpriteYShown, 0f, mInfoBarSpriteYHidden), new MoveModifier(mEachAnimationDuration, 0f, mInfoBarSpriteYHidden, 0f, mInfoBarSpriteYShown), new DelayModifier(mEachAnimationPauseDuration * 2f), new MoveModifier(mEachAnimationDuration, 0f, mInfoBarSpriteYShown, 0f, mInfoBarSpriteYHidden));
 	private static final SequenceEntityModifier mIFLLogo_SequenceEntityModifier = new SequenceEntityModifier(new ParallelEntityModifier(new ScaleAtModifier(mEachAnimationDuration, 25f, mEachScaleToSize, 0.5f, 0.5f), new FadeInModifier(mEachAnimationDuration)), new DelayModifier(mEachAnimationPauseDuration), new ParallelEntityModifier(new ScaleAtModifier(mEachAnimationDuration, mEachScaleToSize, 0f, 0.5f, 0.5f), new FadeOutModifier(mEachAnimationDuration)));
 	private static final SequenceEntityModifier mAndEngineLogo_SequenceEntityModifier = new SequenceEntityModifier(new ParallelEntityModifier(new ScaleAtModifier(mEachAnimationDuration, 25f, mEachScaleToSize, 0.5f, 0.5f), new FadeInModifier(mEachAnimationDuration)), new DelayModifier(mEachAnimationPauseDuration), new ParallelEntityModifier(new ScaleAtModifier(mEachAnimationDuration, mEachScaleToSize, 0f, 0.5f, 0.5f), new FadeOutModifier(mEachAnimationDuration)));
-	private static final SequenceEntityModifier mAndEngineBookLogo_SequenceEntityModifier = new SequenceEntityModifier(new ParallelEntityModifier(new ScaleAtModifier(mEachAnimationDuration, 25f, 1f, 0.5f, 0.5f), new FadeInModifier(mEachAnimationDuration)), new DelayModifier(mEachAnimationPauseDuration * 2f), new ParallelEntityModifier(new ScaleAtModifier(mEachAnimationDuration, 1f, 0f, 0.5f, 0.5f), new FadeOutModifier(mEachAnimationDuration)));
+	//private static final SequenceEntityModifier mAndEngineBookLogo_SequenceEntityModifier = new SequenceEntityModifier(new ParallelEntityModifier(new ScaleAtModifier(mEachAnimationDuration, 25f, 1f, 0.5f, 0.5f), new FadeInModifier(mEachAnimationDuration)), new DelayModifier(mEachAnimationPauseDuration * 2f), new ParallelEntityModifier(new ScaleAtModifier(mEachAnimationDuration, 1f, 0f, 0.5f, 0.5f), new FadeOutModifier(mEachAnimationDuration)));
 	
 	
 	// ==========================================
@@ -156,7 +157,7 @@ public class SplashScreens extends ManagedSplashScreen {
 		mInfoBarTexture.load();
 		mIFLLogoTexture.load();
 		mAndEngineLogoTexture.load();
-		mAndEngineLogoTexture.load();
+		//mAndEngineBookLogoTexture.load();
 		ResourceManager.getCamera().setCenterDirect(ResourceManager.getInstance().cameraWidth / 2f, ResourceManager.getInstance().cameraHeight / 2f);
 		
 		this.setBackgroundEnabled(true);
@@ -173,10 +174,10 @@ public class SplashScreens extends ManagedSplashScreen {
 		this.attachChild(SplashScreens.mAndEngineLogoSprite);
 		this.registerTouchArea(SplashScreens.mAndEngineLogoSprite);
 		
-		SplashScreens.mAndEngineBookLogoSprite.setScale(0.01f);
-		SplashScreens.mAndEngineBookLogoSprite.setAlpha(0.001f);
-		this.attachChild(SplashScreens.mAndEngineBookLogoSprite);
-		this.registerTouchArea(SplashScreens.mAndEngineBookLogoSprite);
+		//SplashScreens.mAndEngineBookLogoSprite.setScale(0.01f);
+		//SplashScreens.mAndEngineBookLogoSprite.setAlpha(0.001f);
+		//this.attachChild(SplashScreens.mAndEngineBookLogoSprite);
+		//this.registerTouchArea(SplashScreens.mAndEngineBookLogoSprite);
 		
 		SplashScreens.mIFLLogo_SequenceEntityModifier.addModifierListener(new IModifierListener<IEntity>() {
 			@Override
@@ -194,13 +195,17 @@ public class SplashScreens extends ManagedSplashScreen {
 			
 		});
 		
+		
 		SplashScreens.mAndEngineLogo_SequenceEntityModifier.addModifierListener(new IModifierListener<IEntity>() {
 			@Override
 			public void onModifierFinished(final IModifier<IEntity> pModifier, final IEntity pItem) {
-				SplashScreens.mAndEngineBookLogoSprite.registerEntityModifier(SplashScreens.mAndEngineBookLogo_SequenceEntityModifier);
-				SplashScreens.mDisplayInfoText1.setText("| Amazon | Barnes & Noble | Safari |");
-				SplashScreens.mDisplayInfoText2.setText("PACKT PUBLISHING");
-				SplashScreens.mDisplayInfoText3.setText("INCLUDES SOURE CODE FOR THIS GAME");
+				//SplashScreens.mAndEngineBookLogoSprite.registerEntityModifier(SplashScreens.mAndEngineBookLogo_SequenceEntityModifier);
+				//SplashScreens.mDisplayInfoText1.setText("EVERYTHING IS COOL");
+				//SplashScreens.mDisplayInfoText2.setText("WHEN YOU'RE PART OF THE TEAML");
+				//SplashScreens.mDisplayInfoText3.setText("EVERY THING IS AWESOME!!!!");
+				SplashScreens.mInfoBarSprite.clearEntityModifiers();
+				SceneManager.getInstance().showMainMenu();
+				ResourceManager.getActivity().showAds();
 			}
 			
 			@Override
@@ -210,6 +215,7 @@ public class SplashScreens extends ManagedSplashScreen {
 			
 		});
 		
+		/*
 		SplashScreens.mAndEngineBookLogo_SequenceEntityModifier.addModifierListener(new IModifierListener<IEntity>() {
 			@Override
 			public void onModifierFinished(final IModifier<IEntity> pModifier, final IEntity pItem) {
@@ -224,14 +230,14 @@ public class SplashScreens extends ManagedSplashScreen {
 			}
 			
 		});
-		
+		*/
 		this.registerUpdateHandler(new IUpdateHandler() {
 			int counter = 0;
 
 			@Override
 			public void onUpdate(final float pSecondsElapsed) {
 				this.counter++;
-				if(this.counter > 2) {
+				if(this.counter > 3) {
 					SplashScreens.mIFLLogoSprite.registerEntityModifier(SplashScreens.mIFLLogo_SequenceEntityModifier);
 					SplashScreens.mInfoBarSprite.registerEntityModifier(SplashScreens.mInfoBar_SequenceEntityModifier);
 					SplashScreens.this.thisManagedSplashScene.unregisterUpdateHandler(this);
@@ -250,7 +256,7 @@ public class SplashScreens extends ManagedSplashScreen {
 	public void unloadSplashTextures() {
 		mIFLLogoTexture.unload();
 		mAndEngineLogoTexture.unload();
-		mAndEngineBookLogoTexture.unload();
+		//mAndEngineBookLogoTexture.unload();
 	}
 
 }

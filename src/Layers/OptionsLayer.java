@@ -14,8 +14,8 @@ import Menus.MainMenu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 
-import com.ronb.magnetank.MagneTankActivity;
-import com.ronb.magnetank.R;
+import com.comfycouch.mtrakk.MTrakkActivity;
+import com.comfycouch.mtrakk.R;
 
 /**
  * This layer is accessible from the MainMenu scene and allows the player
@@ -108,13 +108,13 @@ public class OptionsLayer extends ManagedLayer {
 		this.attachChild(this.LayerBG = new Sprite(0f, (ResourceManager.getInstance().cameraHeight / 2f) + (ResourceManager.gameLevelLayerBGTR.getHeight() / 2f), ResourceManager.gameLevelLayerBGTR, ResourceManager.getActivity().getVertexBufferObjectManager()));
 		this.LayerBG.setScale(1.5f / ResourceManager.getInstance().cameraScaleFactorY);
 		
-		this.TitleText = new Text(0f, 0f, ResourceManager.fontDefaultMagneTank48, "OPTIONS", ResourceManager.getActivity().getVertexBufferObjectManager());
+		this.TitleText = new Text(0f, 0f, ResourceManager.fontDefaultMTrakk48, "OPTIONS", ResourceManager.getActivity().getVertexBufferObjectManager());
 		this.TitleText.setScale(Math.min(390f / this.TitleText.getWidth(), 1f));
 		this.TitleText.setPosition(256f, 225f);
 		this.TitleText.setColor(0.31f, 0.35f, 0.31f);
 		this.LayerBG.attachChild(this.TitleText);
 		
-		this.SoundEnabledText = new GrowToggleTextButton(256f, 197.2f, "SOUND: ENABLED", "SOUND: DISABLED", ResourceManager.fontDefaultMagneTank48, !SFXManager.isSoundMuted()) {
+		this.SoundEnabledText = new GrowToggleTextButton(256f, 197.2f, "SOUND: ENABLED", "SOUND: DISABLED", ResourceManager.fontDefaultMTrakk48, !SFXManager.isSoundMuted()) {
 			@Override
 			public boolean checkState() {
 				return !SFXManager.isSoundMuted();
@@ -130,7 +130,7 @@ public class OptionsLayer extends ManagedLayer {
 		this.LayerBG.attachChild(this.SoundEnabledText);
 		this.registerTouchArea(this.SoundEnabledText);
 		
-		this.MusicEnabledText = new GrowToggleTextButton(256f, 169.4f, "MUSIC: ENABLED", "MUSIC: DISABLED", ResourceManager.fontDefaultMagneTank48, !SFXManager.isMusicMuted()) {
+		this.MusicEnabledText = new GrowToggleTextButton(256f, 169.4f, "MUSIC: ENABLED", "MUSIC: DISABLED", ResourceManager.fontDefaultMTrakk48, !SFXManager.isMusicMuted()) {
 			@Override
 			public boolean checkState() {
 				return !SFXManager.isMusicMuted();
@@ -146,7 +146,7 @@ public class OptionsLayer extends ManagedLayer {
 		this.LayerBG.attachChild(this.MusicEnabledText);
 		this.registerTouchArea(this.MusicEnabledText);
 		
-		this.GraphicsQualityText = new GrowToggleTextButton(256f, 141.6f, "GRAPHICS: HIGH", "GRAPHICS: NORMAL", ResourceManager.fontDefaultMagneTank48, ResourceManager.isUsingHighQualityGraphics()) {
+		this.GraphicsQualityText = new GrowToggleTextButton(256f, 141.6f, "GRAPHICS: HIGH", "GRAPHICS: NORMAL", ResourceManager.fontDefaultMTrakk48, ResourceManager.isUsingHighQualityGraphics()) {
 			@Override
 			public boolean checkState() {
 				return ResourceManager.isUsingHighQualityGraphics();
@@ -162,7 +162,7 @@ public class OptionsLayer extends ManagedLayer {
 		this.LayerBG.attachChild(this.GraphicsQualityText);
 		this.registerTouchArea(this.GraphicsQualityText);
 		
-		this.ResetText = new GrowToggleTextButton(256f, 113.8f, "RESET DATA", "", ResourceManager.fontDefaultMagneTank48, true) {
+		this.ResetText = new GrowToggleTextButton(256f, 113.8f, "RESET DATA", "", ResourceManager.fontDefaultMTrakk48, true) {
 			@Override
 			public boolean checkState() {
 				return true;
@@ -179,12 +179,12 @@ public class OptionsLayer extends ManagedLayer {
 						builder.setMessage("This will reset all scores and stars that you've achieved. Continue?").setPositiveButton("Reset Data", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(final DialogInterface dialog, final int id) {
-								final int ActivityStartCount = MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_ACTIVITY_START_COUNT);
-								final int MusicMuted = MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_MUSIC_MUTED);
-								final boolean Quality = MagneTankActivity.getBooleanFromSharedPreferences(MagneTankActivity.SHARED_PREFS_HIGH_QUALITY_GRAPHICS);
-								final int MarketRated = MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_RATING_SUCCESS);
-								final int SoundMuted = MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_SOUNDS_MUTED);
-								ResourceManager.getActivity().getSharedPreferences(MagneTankActivity.SHARED_PREFS_MAIN, 0).edit().clear().putInt(MagneTankActivity.SHARED_PREFS_ACTIVITY_START_COUNT, ActivityStartCount).putInt(MagneTankActivity.SHARED_PREFS_MUSIC_MUTED, MusicMuted).putBoolean(MagneTankActivity.SHARED_PREFS_HIGH_QUALITY_GRAPHICS, Quality).putInt(MagneTankActivity.SHARED_PREFS_RATING_SUCCESS, MarketRated).putInt(MagneTankActivity.SHARED_PREFS_SOUNDS_MUTED, SoundMuted).apply();
+								final int ActivityStartCount = MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_ACTIVITY_START_COUNT);
+								final int MusicMuted = MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_MUSIC_MUTED);
+								final boolean Quality = MTrakkActivity.getBooleanFromSharedPreferences(MTrakkActivity.SHARED_PREFS_HIGH_QUALITY_GRAPHICS);
+								final int MarketRated = MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_RATING_SUCCESS);
+								final int SoundMuted = MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_SOUNDS_MUTED);
+								ResourceManager.getActivity().getSharedPreferences(MTrakkActivity.SHARED_PREFS_MAIN, 0).edit().clear().putInt(MTrakkActivity.SHARED_PREFS_ACTIVITY_START_COUNT, ActivityStartCount).putInt(MTrakkActivity.SHARED_PREFS_MUSIC_MUTED, MusicMuted).putBoolean(MTrakkActivity.SHARED_PREFS_HIGH_QUALITY_GRAPHICS, Quality).putInt(MTrakkActivity.SHARED_PREFS_RATING_SUCCESS, MarketRated).putInt(MTrakkActivity.SHARED_PREFS_SOUNDS_MUTED, SoundMuted).apply();
 								MainMenu.getInstance().RefreshLevelStars();
 							}
 						}).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

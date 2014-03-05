@@ -12,9 +12,9 @@ import com.badlogic.gdx.physics.box2d.Body;
 
 /**
  * The MagneticPhysObject class extends the PhysObject class to allow an
- * object to be grabbed, or released, by the MagneTank. When grabbed, the
+ * object to be grabbed, or released, by the MTrakk. When grabbed, the
  * object has anti-gravity forces applied as well as forces that pull the
- * object toward the MagneTank turret.
+ * object toward the MTrakk turret.
  * 
  * @author ron
  *

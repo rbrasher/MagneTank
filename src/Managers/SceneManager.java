@@ -9,7 +9,7 @@ import Layers.ManagedLayer;
 import Layers.OptionsLayer;
 import Menus.MainMenu;
 
-import com.ronb.magnetank.ManagedScene;
+import com.comfycouch.mtrakk.ManagedScene;
 
 /**
  * SceneManager class

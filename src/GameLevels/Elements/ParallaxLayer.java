@@ -156,6 +156,7 @@ public class ParallaxLayer extends Entity {
                     this.mAreaShape = pAreaShape;
                     this.mIsScrollable = false;
                     shapeWidthScaled = this.mAreaShape.getWidth()*this.mAreaShape.getScaleX();
+                    
             }
            
             public ParallaxEntity(final float pParallaxFactor, final IShape pAreaShape, final boolean mIsScrollable) {

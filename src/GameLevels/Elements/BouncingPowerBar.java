@@ -39,7 +39,7 @@ public class BouncingPowerBar extends Entity {
 	// ==========================================
 	// VARIABLES
 	// ==========================================
-	private MagneTank mMagneTank;
+	private MTrakk mMTrakk;
 	private boolean mIsLineMovingUp = true;
 	private static Sprite mBACKGROUND;
 	private static Sprite mLINE;
@@ -57,14 +57,14 @@ public class BouncingPowerBar extends Entity {
 		attachChild(BouncingPowerBar.mBACKGROUND);
 		mBACKGROUND.attachChild(mLINE);
 		mBACKGROUND.attachChild(mLENS);
-		mMagneTank = GameManager.getGameLevel().mMagneTank;
+		mMTrakk = GameManager.getGameLevel().mMTrakk;
 	}
 	
 	// ==========================================
 	// METHODS
 	// ==========================================
 	public static void attachInstanceToHud(final HUD pHud) {
-		INSTANCE.mMagneTank = GameManager.getGameLevel().mMagneTank;
+		INSTANCE.mMTrakk = GameManager.getGameLevel().mMTrakk;
 		if(INSTANCE.hasParent())
 			INSTANCE.detachSelf();
 		pHud.attachChild(INSTANCE);
@@ -72,7 +72,7 @@ public class BouncingPowerBar extends Entity {
 	
 	@Override
 	protected void onManagedUpdate(final float pSecondsElapsed) {
-		if(mMagneTank.mTurretMagnetOn) {
+		if(mMTrakk.mTurretMagnetOn) {
 			if(mIsLineMovingUp) {
 				mLINE.setY(mLINE.getY() + (pSecondsElapsed * mLINE_SPEED * mLINE_RANGE));
 				if(mLINE.getY() > mLINE_MAX_Y) {
@@ -90,7 +90,7 @@ public class BouncingPowerBar extends Entity {
 			//turn the power level from a linear slope into a cubic slope
 			final float PercentageOfRange = ((mLINE.getY() - mLINE_MIN_Y) / mLINE_RANGE);
 			final float PercentageOfPower = (float) Math.pow(PercentageOfRange, 3);
-			mMagneTank.mShootingPower = ((MagneTank.mSHOOTING_POWER_MAXIMUM - MagneTank.mSHOOTING_POWER_MINIMUM) * PercentageOfPower) + MagneTank.mSHOOTING_POWER_MINIMUM;
+			mMTrakk.mShootingPower = ((MTrakk.mSHOOTING_POWER_MAXIMUM - MTrakk.mSHOOTING_POWER_MINIMUM) * PercentageOfPower) + MTrakk.mSHOOTING_POWER_MINIMUM;
 		} else {
 			mIsLineMovingUp = true;
 			if(mLINE.getY() != mLINE_MIN_Y)

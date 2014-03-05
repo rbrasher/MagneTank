@@ -8,11 +8,13 @@ import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.sprite.TiledSprite;
 import org.andengine.entity.text.Text;
 
+import GameLevels.GameLevel;
+import GameLevels.Levels;
 import Input.GrowButton;
 import Managers.ResourceManager;
 import Managers.SceneManager;
 
-import com.ronb.magnetank.MagneTankActivity;
+import com.comfycouch.mtrakk.MTrakkActivity;
 
 /**
  * The LevelWonLayer class represents the layer that is shown to the player
@@ -86,7 +88,7 @@ public class LevelWonLayer extends ManagedLayer {
 				ResourceManager.getInstance().engine.unregisterUpdateHandler(this);
 				SceneManager.getInstance().hideLayer();
 				if(LevelWonLayer.this.mIsGoingToRestartLevel) {
-					LeveWonLayer.this.mCurrentLevel.restartLevel();
+					LevelWonLayer.this.mCurrentLevel.restartLevel();
 					return;
 				} else if(LevelWonLayer.this.mIsGoingToNextLevel) {
 					if(Levels.isNextLevelInCurrentWorld(LevelWonLayer.this.mCurrentLevel.mLevelDef)) {
@@ -169,20 +171,20 @@ public class LevelWonLayer extends ManagedLayer {
 		this.mLayerBG.attachChild(new Sprite(365f, 148f, ResourceManager.gameLevelLayerStarsBGTR, ResourceManager.getActivity().getVertexBufferObjectManager()));
 		this.mLayerBG.attachChild(this.mStarsTiledSprite = new TiledSprite(365f, 148f, ResourceManager.gameLevelLayerStarsTTR, ResourceManager.getActivity().getVertexBufferObjectManager()));
 		
-		this.mMainText = new Text(0f, 0f, ResourceManager.fontDefaultMagneTank48, "LEVEL *** SUCCESS!", ResourceManager.getActivity().getVertexBufferObjectManager());
+		this.mMainText = new Text(0f, 0f, ResourceManager.fontDefaultMTrakk48, "LEVEL *** SUCCESS!", ResourceManager.getActivity().getVertexBufferObjectManager());
 		this.mMainText.setScale(Math.min(390f / this.mMainText.getWidth(), 1f));
 		this.mMainText.setPosition(256f, 205f);
 		this.mMainText.setColor(0.31f, 0.35f, 0.31f);
 		this.mLayerBG.attachChild(this.mMainText);
 		
-		this.mScoreText = new Text(0f, 0f, ResourceManager.fontDefaultMagneTank48, "SCORE: *****", ResourceManager.getActivity().getVertexBufferObjectManager());
+		this.mScoreText = new Text(0f, 0f, ResourceManager.fontDefaultMTrakk48, "SCORE: *****", ResourceManager.getActivity().getVertexBufferObjectManager());
 		this.mScoreText.setAnchorCenterX(0f);
 		this.mScoreText.setScale(Math.min(203f / this.mScoreText.getWidth(), 1f));
 		this.mScoreText.setPosition(80f, 155f);
 		this.mScoreText.setColor(0.31f, 0.35f, 0.31f);
 		this.mLayerBG.attachChild(this.mScoreText);
 		
-		this.mHighScoreText = new Text(0f, 0f, ResourceManager.fontDefaultMagneTank48, "HIGHSCORE: *****", ResourceManager.getActivity().getVertexBufferObjectManager());
+		this.mHighScoreText = new Text(0f, 0f, ResourceManager.fontDefaultMTrakk48, "HIGHSCORE: *****", ResourceManager.getActivity().getVertexBufferObjectManager());
 		this.mHighScoreText.setAnchorCenterX(0f);
 		this.mHighScoreText.setScale(Math.min(203f / this.mHighScoreText.getWidth(), 1f));
 		this.mHighScoreText.setPosition(80f, 128f);
@@ -201,7 +203,7 @@ public class LevelWonLayer extends ManagedLayer {
 		this.mIsGoingToRestartLevel = false;
 		this.mIsGoingToNextLevel = false;
 		
-		this.mCurrentLevel.mMagneTank.mTurretMagnetOn = false;
+		this.mCurrentLevel.mMTrakk.mTurretMagnetOn = false;
 		
 		//set the title of the layer
 		this.mMainText.setText("LEVEL " + this.mCurrentLevel.mLevelDef.mLevelIndex + " SUCCESS");
@@ -217,11 +219,11 @@ public class LevelWonLayer extends ManagedLayer {
 		this.mScoreText.setScale(Math.min(203f / this.mScoreText.getWidth(), 1f));
 		
 		// Show the highscore (or the current score if it is the highscore)
-		final int PreviousHighScore = MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_HIGHSCORE + this.mCurrentLevel.mLevelDef.mLevelIndex);
+		final int PreviousHighScore = MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_HIGHSCORE + this.mCurrentLevel.mLevelDef.mLevelIndex);
 		if(PreviousHighScore >= this.mCurrentLevel.CurrentScore) {
 			this.mHighScoreText.setText("HIGHSCORE: " + PreviousHighScore);
 		} else {
-			MagneTankActivity.writeIntToSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_HIGHSCORE + this.mCurrentLevel.mLevelDef.mLevelIndex, this.mCurrentLevel.CurrentScore);
+			MTrakkActivity.writeIntToSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_HIGHSCORE + this.mCurrentLevel.mLevelDef.mLevelIndex, this.mCurrentLevel.CurrentScore);
 			this.mHighScoreText.setText("HIGHSCORE: " + this.mCurrentLevel.CurrentScore);
 		}
 		this.mHighScoreText.setScale(Math.min(203f / this.mHighScoreText.getWidth(), 1f));
@@ -229,16 +231,16 @@ public class LevelWonLayer extends ManagedLayer {
 		// Show the appropriate number of stars
 		final int NumStars = (int) Math.min((this.mCurrentLevel.CurrentScore / (this.mCurrentLevel.TotalScorePossible * 0.9f)) * (this.mStarsTiledSprite.getTileCount()), (this.mStarsTiledSprite.getTileCount() - 1));
 		this.mStarsTiledSprite.setCurrentTileIndex(NumStars);
-		if(NumStars > MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_STARS + this.mCurrentLevel.mLevelDef.mLevelIndex)) {
-			MagneTankActivity.writeIntToSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_STARS + this.mCurrentLevel.mLevelDef.mLevelIndex, NumStars);
+		if(NumStars > MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_STARS + this.mCurrentLevel.mLevelDef.mLevelIndex)) {
+			MTrakkActivity.writeIntToSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_STARS + this.mCurrentLevel.mLevelDef.mLevelIndex, NumStars);
 		}
 		this.mStarsTiledSprite.registerEntityModifier(new ScaleModifier(0.5f, 25f, 1f));
 		this.mStarsTiledSprite.registerEntityModifier(new AlphaModifier(0.5f, 0f, 1f));
 		
 		// Make the next level reachable
-		final int currentMaxLevel = MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_MAX_REACHED);
+		final int currentMaxLevel = MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_MAX_REACHED);
 		if(currentMaxLevel < this.mCurrentLevel.mLevelDef.mLevelIndex) {
-			MagneTankActivity.writeIntToSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_MAX_REACHED, this.mCurrentLevel.mLevelDef.mLevelIndex);
+			MTrakkActivity.writeIntToSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_MAX_REACHED, this.mCurrentLevel.mLevelDef.mLevelIndex);
 		}
 	}
 

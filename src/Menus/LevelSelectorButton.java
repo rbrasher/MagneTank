@@ -9,11 +9,13 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
+import GameLevels.GameLevel;
+import GameLevels.Levels;
 import Managers.ResourceManager;
 import Managers.SFXManager;
 import Managers.SceneManager;
 
-import com.ronb.magnetank.MagneTankActivity;
+import com.comfycouch.mtrakk.MTrakkActivity;
 
 /**
  * The LevelSelectorButton class visually shows the player the state of a
@@ -53,7 +55,7 @@ public class LevelSelectorButton extends Sprite {
 		
 		this.mStarsEnt = new TiledSprite((this.getWidth() / 3f) * 2f, (this.getHeight() / 2f), ResourceManager.menuLevelStarTTR, ResourceManager.getActivity().getVertexBufferObjectManager());
 		
-		this.mIsLocked = (this.mLevelIndex > (MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_MAX_REACHED) + 1));
+		this.mIsLocked = (this.mLevelIndex > (MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_MAX_REACHED) + 1));
 	}
 	
 	// ==========================================
@@ -95,7 +97,7 @@ public class LevelSelectorButton extends Sprite {
 			if(!this.mButtonText.hasParent()) {
 				this.attachChild(this.mButtonText);
 				this.attachChild(this.mStarsEnt);
-				this.mStarsEnt.setCurrentTileIndex(MagneTankActivity.getLevelStars(this.mLevelIndex));
+				this.mStarsEnt.setCurrentTileIndex(MTrakkActivity.getLevelStars(this.mLevelIndex));
 			}
 			
 			if(this.mLockedSprite.hasParent()) {
@@ -136,8 +138,8 @@ public class LevelSelectorButton extends Sprite {
 	}
 	
 	public void refreshStars() {
-		this.mIsLocked = (this.mLevelIndex > (MagneTankActivity.getIntFromSharedPreferences(MagneTankActivity.SHARED_PREFS_LEVEL_MAX_REACHED) + 1));
-		this.mStarsEnt.setCurrentTileIndex(MagneTankActivity.getLevelStars(this.mLevelIndex));
+		this.mIsLocked = (this.mLevelIndex > (MTrakkActivity.getIntFromSharedPreferences(MTrakkActivity.SHARED_PREFS_LEVEL_MAX_REACHED) + 1));
+		this.mStarsEnt.setCurrentTileIndex(MTrakkActivity.getLevelStars(this.mLevelIndex));
 	}
 	
 }

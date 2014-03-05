@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 
 import org.andengine.entity.Entity;
-import org.andengine.entity.primitive.DrawMode;
 import org.andengine.extension.physics.box2d.PhysicsFactory;
 import org.andengine.extension.physics.box2d.util.constants.PhysicsConstants;
 
 import GameLevels.GameLevel;
+import GameLevels.Elements.TexturedMesh.DrawMode;
 import Managers.ResourceManager;
 
 import com.badlogic.gdx.math.Vector2;
@@ -96,6 +96,7 @@ public class TexturedBezierLandscape {
 		}
 		
 		TexturedMesh groundTopLayer = new TexturedMesh(0f, 0f, bufferData, (meshTriangleDataPreBufferData.length/2), DrawMode.TRIANGLES, ResourceManager.gameGroundTopLayerTR, ResourceManager.getActivity().getVertexBufferObjectManager());
+		
 		
 		bufferData = groundTopLayer.getBufferData();
 		for(int i = 0; i < bufferData.length/TexturedMesh.VERTEX_SIZE; i++) {

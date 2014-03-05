@@ -20,12 +20,12 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.ronb.magnetank.MagneTankSmoothCamera;
+import com.comfycouch.mtrakk.MTrakkSmoothCamera;
 
 /**
  * The MagneticCrate class extends the MagneticPhysObject class. It creates
  * and handles the various types of crates available to launch from the
- * MagneTank vehicle. Each create is displayed in the form of a TiledSprite,
+ * MTrakk vehicle. Each create is displayed in the form of a TiledSprite,
  * with the TileSprite's image index set to the crate's type. The
  * MagneticCrate class makes use of Box2D's postSolve() method from the
  * PhysicsWorld's ContactListener.
@@ -197,14 +197,14 @@ public class MagneticCrate extends MagneticPhysObject<TiledSprite> {
 		} else {
 			if(!this.mBody.isActive()) {
 				this.mBody.setActive(true);
-				mGameLevel.mMagneTank.mTurretMagnetOn = true;
+				mGameLevel.mMTrakk.mTurretMagnetOn = true;
 			} else if(this.mEntity.getY()<-1024 && !mHasImpacted) {
 				mHasImpacted = true;
-				((MagneTankSmoothCamera)ResourceManager.getEngine().getCamera()).goToMagneTank();
+				((MTrakkSmoothCamera)ResourceManager.getEngine().getCamera()).goToMTrakk();
 				ResourceManager.getActivity().runOnUpdateThread(new Runnable() {
 					@Override
 					public void run() {
-						mGameLevel.mMagneTank.equipNextCrate(false);
+						mGameLevel.mMTrakk.equipNextCrate(false);
 					}});
 				this.destroy();
 			}
@@ -238,8 +238,8 @@ public class MagneticCrate extends MagneticPhysObject<TiledSprite> {
 					if(pMaxImpulse > 20f) {
 						this.mIsGrabbed = false;
 						this.mGameLevel.mMagneticObjects.remove(this);
-						if(this.mGameLevel.mMagneTank.mGrabbedMagneticObject == this)
-							this.mGameLevel.mMagneTank.mGrabbedMagneticObject = null;
+						if(this.mGameLevel.mMTrakk.mGrabbedMagneticObject == this)
+							this.mGameLevel.mMTrakk.mGrabbedMagneticObject = null;
 						this.destroy();
 						this.mGameLevel.createExplosion(this.mBody.getWorldCenter(), (this.mCrateSize.sizeIndex+1f)*60000f*FloatMath.sqrt(this.mBody.getMass()));
 						AnimatedSprite crateExplosion = new AnimatedSprite(this.mEntity.getX(),this.mEntity.getY(),ResourceManager.gameExplosionTTR,ResourceManager.getActivity().getVertexBufferObjectManager());
@@ -290,11 +290,11 @@ public class MagneticCrate extends MagneticPhysObject<TiledSprite> {
 			if(this.mEntity != null && this!=null)
 				if(!mHasImpacted){
 					mHasImpacted = true;
-					((MagneTankSmoothCamera)ResourceManager.getEngine().getCamera()).goToBaseForSeconds(1f);
+					((MTrakkSmoothCamera)ResourceManager.getEngine().getCamera()).goToBaseForSeconds(1f);
 					ResourceManager.getActivity().runOnUpdateThread(new Runnable() {
 						@Override
 						public void run() {
-							mGameLevel.mMagneTank.equipNextCrate(false);
+							mGameLevel.mMTrakk.equipNextCrate(false);
 						}});
 				}
 	}

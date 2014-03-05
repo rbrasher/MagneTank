@@ -5,7 +5,7 @@ import org.andengine.input.touch.TouchEvent;
 /**
  * The BoundTouchInput class facilitates the delegation of inputs, which are
  * then bound to the BoundTouchInput. This can be easily seen in-game when
- * moving the MagneTank versus aiming the turret. When the touch enters
+ * moving the MTrakk versus aiming the turret. When the touch enters
  * another touchable area, it stays tied to the original area.
  *  
  * @author ron

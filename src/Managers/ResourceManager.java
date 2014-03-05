@@ -13,7 +13,7 @@ import org.andengine.opengl.texture.bitmap.BitmapTextureFormat;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.texture.region.TextureRegion;
 import org.andengine.opengl.texture.region.TiledTextureRegion;
-import org.andengine.util.color.Color;
+import org.andengine.util.adt.color.Color;
 
 import Layers.LevelPauseLayer;
 import Layers.LevelWonLayer;
@@ -30,10 +30,10 @@ import android.graphics.Typeface;
 import android.opengl.GLES20;
 import android.util.FloatMath;
 
-import com.ronb.magnetank.MagneTankActivity;
-import com.ronb.magnetank.MagneTankSmoothCamera;
-import com.ronb.magnetank.R;
-import com.ronb.magnetank.SwitchableFixedStepEngine;
+import com.comfycouch.mtrakk.MTrakkActivity;
+import com.comfycouch.mtrakk.MTrakkSmoothCamera;
+import com.comfycouch.mtrakk.R;
+import com.comfycouch.mtrakk.SwitchableFixedStepEngine;
 
 /**
  * This ResourceManager adds the ability to use a set of lower-quality textures
@@ -60,7 +60,7 @@ public class ResourceManager extends Object {
 	// easy accessibility across our project.
 	public SwitchableFixedStepEngine engine;
 	public Context context;
-	public MagneTankActivity activity;
+	public MTrakkActivity activity;
 	public float cameraWidth;
 	public float cameraHeight;
 	public float cameraScaleFactorX;
@@ -96,12 +96,12 @@ public class ResourceManager extends Object {
 	public static TextureRegion gamePowerBarLensTR;
 	public static TextureRegion gamePauseButtonTR;
 
-	public static TextureRegion gameMagneTankBodyTR;
-	public static TextureRegion gameMagneTankTurretTR;
-	public static TextureRegion gameMagneTankWheelTR;
-	public static TextureRegion gameMagneTankWheelShadowTR;
-	public static TextureRegion gameMagneTankTurretConnectionTR;
-	public static TextureRegion gameMagneTankShadowTR;
+	public static TextureRegion gameMTrakkBodyTR;
+	public static TextureRegion gameMTrakkTurretTR;
+	public static TextureRegion gameMTrakkWheelTR;
+	public static TextureRegion gameMTrakkWheelShadowTR;
+	public static TextureRegion gameMTrakkTurretConnectionTR;
+	public static TextureRegion gameMTrakkShadowTR;
 
 	public static TextureRegion gameMagOrbCWTR;
 	public static TextureRegion gameMagOrbCCWTR;
@@ -147,7 +147,7 @@ public class ResourceManager extends Object {
 	public static Font fontDefault32Bold;
 	public static Font fontDefault72Bold;
 	public static Font fontMonospace72Bold;
-	public static Font fontDefaultMagneTank48;
+	public static Font fontDefaultMTrakk48;
 
 	// This variable will be used to revert the TextureFactory's default path
 	// when we change it.
@@ -171,7 +171,7 @@ public class ResourceManager extends Object {
 	// PUBLIC METHODS
 	// ====================================================
 	// Setup the ResourceManager
-	public static void setup(MagneTankActivity pActivity,
+	public static void setup(MTrakkActivity pActivity,
 			SwitchableFixedStepEngine pEngine, Context pContext,
 			float pCameraWidth, float pCameraHeight, float pCameraScaleX,
 			float pCameraScaleY) {
@@ -207,12 +207,12 @@ public class ResourceManager extends Object {
 		return getInstance().context;
 	}
 
-	public static MagneTankActivity getActivity() {
+	public static MTrakkActivity getActivity() {
 		return getInstance().activity;
 	}
 
-	public static MagneTankSmoothCamera getCamera() {
-		return (MagneTankSmoothCamera) getInstance().engine.getCamera();
+	public static MTrakkSmoothCamera getCamera() {
+		return (MTrakkSmoothCamera) getInstance().engine.getCamera();
 	}
 
 	// ====================================================
@@ -386,8 +386,8 @@ public class ResourceManager extends Object {
 		activity.runOnUpdateThread(new Runnable() {
 			@Override
 			public void run() {
-				MagneTankActivity.writeBooleanToSharedPreferences(
-						MagneTankActivity.SHARED_PREFS_HIGH_QUALITY_GRAPHICS,
+				MTrakkActivity.writeBooleanToSharedPreferences(
+						MTrakkActivity.SHARED_PREFS_HIGH_QUALITY_GRAPHICS,
 						!isUsingHighQualityGraphics());
 				AlarmManager alm = (AlarmManager) activity
 						.getSystemService(Context.ALARM_SERVICE);
@@ -411,7 +411,7 @@ public class ResourceManager extends Object {
 		// textures
 		mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory
 				.getAssetBasePath();
-		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MagneTank/");
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MTrakk/");
 
 		final TextureManager textureManager = activity.getTextureManager();
 
@@ -449,7 +449,7 @@ public class ResourceManager extends Object {
 		// available in the assets)
 		if (!useHighQuality)
 			BitmapTextureAtlasTextureRegionFactory
-					.setAssetBasePath("MagneTank/Limited/");
+					.setAssetBasePath("MTrakk/Limited/");
 
 		// crates
 		if (gameCrateSmallTTR == null)
@@ -508,24 +508,24 @@ public class ResourceManager extends Object {
 			gamePauseButtonTR = getLimitableTR("PauseButton.png",
 					mTransparentTextureOption);
 
-		if (gameMagneTankBodyTR == null)
-			gameMagneTankBodyTR = getLimitableTR("MagneTank_Body.png",
+		if (gameMTrakkBodyTR == null)
+			gameMTrakkBodyTR = getLimitableTR("MTrakk_Body.png",
 					mTransparentTextureOption);
-		if (gameMagneTankTurretTR == null)
-			gameMagneTankTurretTR = getLimitableTR("MagneTank_Turret.png",
+		if (gameMTrakkTurretTR == null)
+			gameMTrakkTurretTR = getLimitableTR("MTrakk_Turret.png",
 					mTransparentTextureOption);
-		if (gameMagneTankWheelTR == null)
-			gameMagneTankWheelTR = getLimitableTR("MagneTank_Wheel.png",
+		if (gameMTrakkWheelTR == null)
+			gameMTrakkWheelTR = getLimitableTR("MTrakk_Wheel.png",
 					mTransparentTextureOption);
-		if (gameMagneTankWheelShadowTR == null)
-			gameMagneTankWheelShadowTR = getLimitableTR(
-					"MagneTank_WheelShadow.png", mTransparentTextureOption);
-		if (gameMagneTankTurretConnectionTR == null)
-			gameMagneTankTurretConnectionTR = getLimitableTR(
-					"MagneTank_Turret_Connection.png",
+		if (gameMTrakkWheelShadowTR == null)
+			gameMTrakkWheelShadowTR = getLimitableTR(
+					"MTrakk_WheelShadow.png", mTransparentTextureOption);
+		if (gameMTrakkTurretConnectionTR == null)
+			gameMTrakkTurretConnectionTR = getLimitableTR(
+					"MTrakk_Turret_Connection.png",
 					mTransparentTextureOption);
-		if (gameMagneTankShadowTR == null)
-			gameMagneTankShadowTR = getLimitableTR("MagneTank_Shadow.png",
+		if (gameMTrakkShadowTR == null)
+			gameMTrakkShadowTR = getLimitableTR("MTrakk_Shadow.png",
 					mTransparentTextureOption);
 
 		if (gameMagOrbCWTR == null)
@@ -599,7 +599,7 @@ public class ResourceManager extends Object {
 	private void loadMenuTextures() {
 		//store the current base path to apply it after we've loaded our textures
 		mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
-		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MagneTank/Menu/");
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MTrakk/Menu/");
 		
 		if(menuLevelIconTR == null) {
 			BitmapTextureAtlas LevelIconT = new BitmapTextureAtlas(ResourceManager.getActivity().getTextureManager(), 64, 64, mTransparentTextureOption);
@@ -632,13 +632,13 @@ public class ResourceManager extends Object {
 		}
 		
 		if(!useHighQuality)
-			BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MagneTank/Limited/Menu/");
+			BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MTrakk/Limited/Menu/");
 		
 		if(menuBackgroundTR == null)
 			menuBackgroundTR = getLimitableTR("BG.jpg", mNormalTextureOption);
 		
 		if(menuMainTitleTR == null)
-			menuMainTitleTR = getLimitableTR("MagneTankTitle.png", mTransparentTextureOption);
+			menuMainTitleTR = getLimitableTR("MTrakkTitle.png", mTransparentTextureOption);
 		
 		if(menuMainButtonsTTR == null)
 			menuMainButtonsTTR = getLimitableTTR("MainMenuButtons.png", 1, 4, mTransparentTextureOption);
@@ -653,9 +653,9 @@ public class ResourceManager extends Object {
 		mPreviousAssetBasePath = BitmapTextureAtlasTextureRegionFactory.getAssetBasePath();
 		
 		if(!useHighQuality)
-			BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MagneTank/Limited/");
+			BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MTrakk/Limited/");
 		else
-			BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MagneTank/");
+			BitmapTextureAtlasTextureRegionFactory.setAssetBasePath("MTrakk/");
 		
 		if(MusicToggleTTR == null)
 			MusicToggleTTR = getLimitableTTR("MusicToggle.png", 2, 1, mTransparentTextureOption);
@@ -685,9 +685,9 @@ public class ResourceManager extends Object {
 			fontMonospace72Bold.load();
 		}
 		
-		if(fontDefaultMagneTank48 == null) {
-			fontDefaultMagneTank48 = getFont(Typeface.createFromAsset(activity.getAssets(), "fonts/X_SCALE_by_Factor_i.ttf"), 48f, true);
-			fontDefaultMagneTank48.load();
+		if(fontDefaultMTrakk48 == null) {
+			fontDefaultMTrakk48 = getFont(Typeface.createFromAsset(activity.getAssets(), "fonts/X_SCALE_by_Factor_i.ttf"), 48f, true);
+			fontDefaultMTrakk48.load();
 		}
 	}
 	

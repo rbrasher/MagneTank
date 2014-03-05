@@ -18,7 +18,7 @@ import Managers.ResourceManager;
 
 /**
  * The RemainingCratesBar class gives a visual representation to the player
- * of which crates are left to be shot by the MagneTank. The size, type, and
+ * of which crates are left to be shot by the MTrakk. The size, type, and
  * number of crates left in each level are retrieved from the GameLevel
  * class and vary from level to level. When one crate is shot, the
  * RemainingCratesBar animates to reflect the change in the game state.
